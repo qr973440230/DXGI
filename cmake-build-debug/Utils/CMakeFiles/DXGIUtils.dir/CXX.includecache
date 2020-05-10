@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/qr973/CLionProjects/DXGI/Utils/BmpUtils.cpp
+BmpUtils.h
+C:/Users/qr973/CLionProjects/DXGI/Utils/BmpUtils.h
+
+C:/Users/qr973/CLionProjects/DXGI/Utils/BmpUtils.h
+Windows.h
+-
+

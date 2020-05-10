@@ -1,0 +1,9 @@
+C:/Users/qr973/CLionProjects/DXGI/cmake-build-debug/CMakeFiles/DXGI.dir
+C:/Users/qr973/CLionProjects/DXGI/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/qr973/CLionProjects/DXGI/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+C:/Users/qr973/CLionProjects/DXGI/cmake-build-debug/ImageCapture/CMakeFiles/DXGIImageCapture.dir
+C:/Users/qr973/CLionProjects/DXGI/cmake-build-debug/ImageCapture/CMakeFiles/edit_cache.dir
+C:/Users/qr973/CLionProjects/DXGI/cmake-build-debug/ImageCapture/CMakeFiles/rebuild_cache.dir
+C:/Users/qr973/CLionProjects/DXGI/cmake-build-debug/Utils/CMakeFiles/DXGIUtils.dir
+C:/Users/qr973/CLionProjects/DXGI/cmake-build-debug/Utils/CMakeFiles/edit_cache.dir
+C:/Users/qr973/CLionProjects/DXGI/cmake-build-debug/Utils/CMakeFiles/rebuild_cache.dir

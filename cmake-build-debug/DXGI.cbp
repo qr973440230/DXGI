@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="DXGI"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="msvc8"/>
+		<Option virtualFolders="CMake Files\;CMake Files\ImageCapture\;CMake Files\Utils\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="C:/Users/qr973/CLionProjects/DXGI/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\qr973\CLionProjects\DXGI\cmake-build-debug\Makefile VERBOSE=1 all"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\qr973\CLionProjects\DXGI\cmake-build-debug\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\qr973\CLionProjects\DXGI\cmake-build-debug\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\qr973\CLionProjects\DXGI\cmake-build-debug\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="DXGI">
+				<Option output="C:/Users/qr973/CLionProjects/DXGI/cmake-build-debug/DXGI.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/qr973/CLionProjects/DXGI/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\qr973\CLionProjects\DXGI\cmake-build-debug\Makefile VERBOSE=1 DXGI"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\qr973\CLionProjects\DXGI\cmake-build-debug\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\qr973\CLionProjects\DXGI\cmake-build-debug\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\qr973\CLionProjects\DXGI\cmake-build-debug\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="DXGI/fast">
+				<Option output="C:/Users/qr973/CLionProjects/DXGI/cmake-build-debug/DXGI.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/qr973/CLionProjects/DXGI/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\qr973\CLionProjects\DXGI\cmake-build-debug\Makefile VERBOSE=1 DXGI/fast"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\qr973\CLionProjects\DXGI\cmake-build-debug\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\qr973\CLionProjects\DXGI\cmake-build-debug\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\qr973\CLionProjects\DXGI\cmake-build-debug\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="C:/Users/qr973/CLionProjects/DXGI/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\qr973\CLionProjects\DXGI\cmake-build-debug\Makefile VERBOSE=1 edit_cache"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\qr973\CLionProjects\DXGI\cmake-build-debug\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\qr973\CLionProjects\DXGI\cmake-build-debug\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\qr973\CLionProjects\DXGI\cmake-build-debug\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="C:/Users/qr973/CLionProjects/DXGI/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\qr973\CLionProjects\DXGI\cmake-build-debug\Makefile VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\qr973\CLionProjects\DXGI\cmake-build-debug\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\qr973\CLionProjects\DXGI\cmake-build-debug\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\qr973\CLionProjects\DXGI\cmake-build-debug\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="DXGIImageCapture">
+				<Option output="C:/Users/qr973/CLionProjects/DXGI/cmake-build-debug/DXGIImageCapture.dll" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/qr973/CLionProjects/DXGI/cmake-build-debug/ImageCapture"/>
+				<Option object_output="./"/>
+				<Option type="3"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\qr973\CLionProjects\DXGI\cmake-build-debug\ImageCapture\Makefile VERBOSE=1 DXGIImageCapture"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\qr973\CLionProjects\DXGI\cmake-build-debug\ImageCapture\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\qr973\CLionProjects\DXGI\cmake-build-debug\ImageCapture\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\qr973\CLionProjects\DXGI\cmake-build-debug\ImageCapture\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="DXGIImageCapture/fast">
+				<Option output="C:/Users/qr973/CLionProjects/DXGI/cmake-build-debug/DXGIImageCapture.dll" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/qr973/CLionProjects/DXGI/cmake-build-debug/ImageCapture"/>
+				<Option object_output="./"/>
+				<Option type="3"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\qr973\CLionProjects\DXGI\cmake-build-debug\ImageCapture\Makefile VERBOSE=1 DXGIImageCapture/fast"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\qr973\CLionProjects\DXGI\cmake-build-debug\ImageCapture\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\qr973\CLionProjects\DXGI\cmake-build-debug\ImageCapture\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\qr973\CLionProjects\DXGI\cmake-build-debug\ImageCapture\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="DXGIUtils">
+				<Option output="C:/Users/qr973/CLionProjects/DXGI/cmake-build-debug/DXGIUtils.dll" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/qr973/CLionProjects/DXGI/cmake-build-debug/Utils"/>
+				<Option object_output="./"/>
+				<Option type="3"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\qr973\CLionProjects\DXGI\cmake-build-debug\Utils\Makefile VERBOSE=1 DXGIUtils"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\qr973\CLionProjects\DXGI\cmake-build-debug\Utils\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\qr973\CLionProjects\DXGI\cmake-build-debug\Utils\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\qr973\CLionProjects\DXGI\cmake-build-debug\Utils\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="DXGIUtils/fast">
+				<Option output="C:/Users/qr973/CLionProjects/DXGI/cmake-build-debug/DXGIUtils.dll" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/qr973/CLionProjects/DXGI/cmake-build-debug/Utils"/>
+				<Option object_output="./"/>
+				<Option type="3"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\qr973\CLionProjects\DXGI\cmake-build-debug\Utils\Makefile VERBOSE=1 DXGIUtils/fast"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\qr973\CLionProjects\DXGI\cmake-build-debug\Utils\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\qr973\CLionProjects\DXGI\cmake-build-debug\Utils\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\qr973\CLionProjects\DXGI\cmake-build-debug\Utils\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="C:/Users/qr973/CLionProjects/DXGI/ImageCapture/ImageCapture.cpp">
+			<Option target="DXGIImageCapture"/>
+		</Unit>
+		<Unit filename="C:/Users/qr973/CLionProjects/DXGI/ImageCapture/ImageCapture.h">
+			<Option target="DXGIImageCapture"/>
+		</Unit>
+		<Unit filename="C:/Users/qr973/CLionProjects/DXGI/Utils/BmpUtils.cpp">
+			<Option target="DXGIUtils"/>
+		</Unit>
+		<Unit filename="C:/Users/qr973/CLionProjects/DXGI/Utils/BmpUtils.h">
+			<Option target="DXGIUtils"/>
+		</Unit>
+		<Unit filename="C:/Users/qr973/CLionProjects/DXGI/main.cpp">
+			<Option target="DXGI"/>
+		</Unit>
+		<Unit filename="C:/Users/qr973/CLionProjects/DXGI/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="C:/Users/qr973/CLionProjects/DXGI/ImageCapture/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\ImageCapture\"/>
+		</Unit>
+		<Unit filename="C:/Users/qr973/CLionProjects/DXGI/Utils/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\Utils\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
