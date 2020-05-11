@@ -5,4 +5,6 @@ set(CMAKE_CXX_STANDARD 14)
 add_library(DXGIUtils
         SHARED
         BmpUtils.cpp
-        BmpUtils.h)
+        BmpUtils.h
+        PixelUtils.cpp
+        PixelUtils.h)

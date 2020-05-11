@@ -21,7 +21,7 @@ static bool AttachToThread() {
 }
 
 //视频数据捕获函数
-static bool ProcessCaptureData(ImageCapture *imageCapture) {
+static bool GetImageCaptureData(ImageCapture *imageCapture) {
     //将桌面挂到这个进程中
     if (!AttachToThread()) {
         return false;
@@ -91,21 +91,7 @@ static bool ProcessCaptureData(ImageCapture *imageCapture) {
     DXGI_MAPPED_RECT mappedRect;
     hr = dxgiSurface->Map(&mappedRect, DXGI_MAP_READ);
     if (SUCCEEDED(hr)) {
-        WORD bitsPerPixel = 4;
-        int iWidth =
-                imageCapture->m_dxOutDesc.DesktopCoordinates.right - imageCapture->m_dxOutDesc.DesktopCoordinates.left;
-//        int iHeight = imageCapture->m_dxOutDesc.DesktopCoordinates.bottom - imageCapture->m_dxOutDesc.DesktopCoordinates.top;
-        int iCopyDataLength = (imageCapture->m_nWidth * 32 + 31) / 32 * bitsPerPixel;
-        int j = 0;
-        for (int h = imageCapture->m_nTop; h < imageCapture->m_nTop + imageCapture->m_nHeight; h++) {
-            int iSrcOffset = (h * iWidth + imageCapture->m_nLeft) * bitsPerPixel;
-            BYTE *pSrc = mappedRect.pBits + iSrcOffset;
-            int iDesOffset = (imageCapture->m_nWidth * 32 + 31) / 32 * j * bitsPerPixel;
-            BYTE *pDes = (BYTE *) imageCapture->m_memRawBuffer + iDesOffset;
-            memcpy(pDes, pSrc, iCopyDataLength);
-            j++;
-        }
-
+        memcpy(imageCapture->m_memRawBuffer, mappedRect.pBits, imageCapture->m_nMemSize);
         dxgiSurface->Unmap();
     }
 
@@ -123,7 +109,7 @@ static unsigned WINAPI OnImageCaptureThread(void *param) {
 
     // 等待超时进入下一次图像数据获取
     while (WaitForSingleObject(imageCapture->m_hStopSignal, dwTimeout) == WAIT_TIMEOUT) {
-        if (ProcessCaptureData(imageCapture)) {
+        if (GetImageCaptureData(imageCapture)) {
             if (imageCapture->m_bActive) {
                 //获取图像成功，回调数据给应用层用户处理
                 if (imageCapture->m_imageCaptureCallback) {
@@ -156,15 +142,6 @@ static unsigned WINAPI OnImageCaptureThread(void *param) {
 
 //开始捕获视频数据
 static bool StartImageCapture(ImageCapture *imageCapture) {
-    // 释放之前申请的的存放图像的缓存
-    free(imageCapture->m_memRawBuffer);
-    imageCapture->m_memRawBuffer = nullptr;
-    imageCapture->m_nMemSize = 0;
-
-    //计算所需存放图像的缓存大小
-    imageCapture->m_nMemSize = imageCapture->m_nWidth * imageCapture->m_nHeight * 4;//获取的图像位图深度32位，所以是*4
-    imageCapture->m_memRawBuffer = (char *) malloc(imageCapture->m_nMemSize);
-    memset(imageCapture->m_memRawBuffer, 0, imageCapture->m_nMemSize);
 
     //创建捕获图像的线程
     unsigned int dwThreadId;
@@ -264,13 +241,25 @@ bool DXGI_InitCapture(ImageCapture *imageCapture) {
     }
 
     hDxgiOutput->GetDesc(&imageCapture->m_dxOutDesc);
+    imageCapture->m_nWidth = imageCapture->m_dxOutDesc.DesktopCoordinates.right
+                             - imageCapture->m_dxOutDesc.DesktopCoordinates.left;
+    imageCapture->m_nHeight = imageCapture->m_dxOutDesc.DesktopCoordinates.bottom
+                              - imageCapture->m_dxOutDesc.DesktopCoordinates.top;
 
-    hr = hDxgiOutput->QueryInterface(__uuidof(IDXGIOutput1), reinterpret_cast<void **>(&hDxgiOutput1));
+    //计算所需存放图像的缓存大小
+    imageCapture->m_nMemSize = imageCapture->m_nWidth * imageCapture->m_nHeight * 4;//获取的图像位图深度32位，所以是*4
+    imageCapture->m_memRawBuffer = (char *) malloc(imageCapture->m_nMemSize);
+    memset(imageCapture->m_memRawBuffer, 0, imageCapture->m_nMemSize);
+
+
+    hr = hDxgiOutput->QueryInterface(__uuidof(IDXGIOutput1),
+                                     reinterpret_cast<void **>(&hDxgiOutput1));
     RESET_OBJECT(hDxgiOutput);
     if (FAILED(hr)) {
         DXGI_ReleaseCapture(imageCapture);
         return false;
     }
+
 
     hr = hDxgiOutput1->DuplicateOutput(imageCapture->m_hDevice, &imageCapture->m_hDeskDup);
     RESET_OBJECT(hDxgiOutput1);
@@ -297,17 +286,9 @@ bool DXGI_ReleaseCapture(ImageCapture *imageCapture) {
 // DXGI方式，设置视频回调函数，并开始捕获视频数据
 bool DXGI_StartCapture(ImageCapture *imageCapture,
                        int fps,
-                       int left, int top,
-                       int width, int height,
                        ImageCaptureCallback captureCallback,
                        void *userData) {
     imageCapture->m_fps = fps;
-
-    //保存捕获区域参数
-    imageCapture->m_nLeft = left;
-    imageCapture->m_nTop = top;
-    imageCapture->m_nWidth = width;
-    imageCapture->m_nHeight = height;
 
     //设置图像数据回调函数
     imageCapture->m_imageCaptureCallback = captureCallback;
@@ -320,7 +301,6 @@ bool DXGI_StartCapture(ImageCapture *imageCapture,
 
     return success;
 }
-
 
 // 停止视频数据捕获
 bool DXGI_StopCapture(ImageCapture *imageCapture) {

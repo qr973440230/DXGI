@@ -2,14 +2,16 @@
 <project version="4">
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
     <generated>
+      <config projectName="DXGI" targetName="copy_runtime" />
+      <config projectName="DXGI" targetName="DXGI" />
       <config projectName="DXGI" targetName="DXGIUtils" />
       <config projectName="DXGI" targetName="DXGIImageCapture" />
-      <config projectName="DXGI" targetName="DXGI" />
     </generated>
   </component>
   <component name="CMakeSettings" AUTO_RELOAD="true">
     <configurations>
       <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
+      <configuration PROFILE_NAME="Release" CONFIG_NAME="Release" />
     </configurations>
   </component>
   <component name="ChangeListManager">
@@ -32,14 +34,26 @@
     </option>
   </component>
   <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
-  <component name="OCResolveContextSettings">
-    <option name="configuration" value="0-ScreenCapture" />
-  </component>
   <component name="ProjectId" id="1bhgpx2dshJjd6vvM2LZuu5TSnW" />
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="E:/GitHub/FFMpeg_Demo" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/ThreePartLibraries/shared/x64/debug" />
+    <property name="settings.editor.selected.configurable" value="CPPToolchains" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\GitHub\DXGI\ThreePartLibraries\shared\x64\debug" />
+      <recent name="E:\GitHub\DXGI\ThreePartLibraries\shared\x86\debug" />
+      <recent name="E:\GitHub\DXGI\ThreePartLibraries\lib\x86\debug" />
+      <recent name="E:\GitHub\DXGI\ThreePartLibraries\lib\x64\debug" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\GitHub\DXGI\ThreePartLibraries\lib\x86\release" />
+      <recent name="E:\GitHub\DXGI\ThreePartLibraries\lib\x64\release" />
+      <recent name="E:\GitHub\DXGI\ThreePartLibraries\shared\x86\release" />
+      <recent name="E:\GitHub\DXGI\ThreePartLibraries\shared\x64\release" />
+      <recent name="E:\GitHub\DXGI\three-part-libraries" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -69,7 +83,13 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="copy_runtime" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="DXGI" TARGET_NAME="copy_runtime" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <list>
+      <item itemvalue="CMake Application.copy_runtime" />
       <item itemvalue="CMake Application.DXGI" />
       <item itemvalue="CMake Application.DXGIImageCapture" />
       <item itemvalue="CMake Application.DXGIUtils" />
@@ -85,6 +105,9 @@
       <workItem from="1589089929129" duration="6023000" />
       <workItem from="1589098508529" duration="7179000" />
       <workItem from="1589121647358" duration="12000" />
+      <workItem from="1589163033218" duration="76000" />
+      <workItem from="1589178623731" duration="9949000" />
+      <workItem from="1589206387326" duration="3020000" />
     </task>
     <servers />
   </component>

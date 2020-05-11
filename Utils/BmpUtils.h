@@ -7,8 +7,8 @@
 
 #include <Windows.h>
 
-__declspec(dllexport) void rotateImg(unsigned char *data, int width, int height);
+__declspec(dllexport) void RotateImg(unsigned char *data, int width, int height);
 
-__declspec(dllexport) void saveBmpFile(const char *fileName, unsigned char *data, int width, int height);
+__declspec(dllexport) void SaveBmpFile(const char *fileName, unsigned char *data, int width, int height);
 
 #endif //DXGI_BMPUTILS_H

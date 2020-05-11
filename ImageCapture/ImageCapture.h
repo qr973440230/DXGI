@@ -8,8 +8,6 @@
 typedef void(*ImageCaptureCallback)(unsigned char *data, int size, int width, int height, void *user_data);
 
 typedef struct {
-    int m_nLeft;//捕获区域坐标值-左
-    int m_nTop;//捕获区域坐标值-上
     int m_nWidth;//捕获区域-宽度
     int m_nHeight;//捕获区域-高度
     int m_fps;// 捕获帧率
@@ -38,8 +36,6 @@ __declspec(dllexport) bool DXGI_ReleaseCapture(ImageCapture *imageCapture);
 
 __declspec(dllexport) bool DXGI_StartCapture(ImageCapture *imageCapture,
                                              int fps,
-                                             int left, int top,
-                                             int width, int height,
                                              ImageCaptureCallback captureCallback,
                                              void *userData);
 

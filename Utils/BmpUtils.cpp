@@ -4,7 +4,7 @@
 
 #include "BmpUtils.h"
 
-void rotateImg(unsigned char *data, int width, int height) {
+void RotateImg(unsigned char *data, int width, int height) {
     unsigned int *imgData;
     unsigned int *imgDataR;
     unsigned int *imgDataTmp;
@@ -26,7 +26,7 @@ void rotateImg(unsigned char *data, int width, int height) {
     delete[] imgDataTmp;
 }
 
-void saveBmpFile(const char *fileName, unsigned char *data, int width, int height) {
+void SaveBmpFile(const char *fileName, unsigned char *data, int width, int height) {
     int imgLength = width * height * 4;
 
     BITMAPFILEHEADER tagBitmapFileHeader;
