@@ -3,9 +3,9 @@
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
     <generated>
       <config projectName="DXGI" targetName="copy_runtime" />
-      <config projectName="DXGI" targetName="DXGI" />
       <config projectName="DXGI" targetName="DXGIUtils" />
       <config projectName="DXGI" targetName="DXGIImageCapture" />
+      <config projectName="DXGI" targetName="DXGI" />
     </generated>
   </component>
   <component name="CMakeSettings" AUTO_RELOAD="true">
@@ -108,6 +108,7 @@
       <workItem from="1589163033218" duration="76000" />
       <workItem from="1589178623731" duration="9949000" />
       <workItem from="1589206387326" duration="3020000" />
+      <workItem from="1589209476104" duration="112000" />
     </task>
     <servers />
   </component>
