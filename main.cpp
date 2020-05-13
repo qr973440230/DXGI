@@ -16,13 +16,14 @@ int main() {
                           char buf[1000];
                           sprintf_s(buf, 1000, "capture%d.bmp", i++);
 //                          RotateImg(data, width, height);
+                          SaveBmpFile(buf, data, width, height);
 
-                          std::vector<unsigned char> vector(size);
-                          for (int j = 0; j < size; j++) {
-                              vector.push_back(data[j]);
-                          }
-                          InputArray array((std::vector<unsigned char>()));
-                          imwrite(buf, array);
+//                          std::vector<unsigned char> vector(size);
+//                          for (int j = 0; j < size; j++) {
+//                              vector.push_back(data[j]);
+//                          }
+//                          InputArray array((std::vector<unsigned char>()));
+//                          imwrite(buf, array);
                       }, nullptr);
 
     Sleep(1000);
