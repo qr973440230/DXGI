@@ -3,8 +3,9 @@
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
     <generated>
       <config projectName="DXGI" targetName="copy_runtime" />
-      <config projectName="DXGI" targetName="DXGIUtils" />
       <config projectName="DXGI" targetName="DXGIImageCapture" />
+      <config projectName="DXGI" targetName="MatchTemplate" />
+      <config projectName="DXGI" targetName="DXGIUtils" />
       <config projectName="DXGI" targetName="DXGI" />
     </generated>
   </component>
@@ -76,6 +77,11 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="MatchTemplate" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="DXGI" TARGET_NAME="MatchTemplate" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="DXGI" RUN_TARGET_NAME="MatchTemplate">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="copy_runtime" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="DXGI" TARGET_NAME="copy_runtime" CONFIG_NAME="Debug">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -84,6 +90,7 @@
     <list>
       <item itemvalue="CMake Application.copy_runtime" />
       <item itemvalue="CMake Application.DXGI" />
+      <item itemvalue="CMake Application.MatchTemplate" />
       <item itemvalue="CMake Application.DXGIImageCapture" />
       <item itemvalue="CMake Application.DXGIUtils" />
     </list>
@@ -114,7 +121,41 @@
       <workItem from="1589178623731" duration="9949000" />
       <workItem from="1589206387326" duration="3020000" />
       <workItem from="1589260104419" duration="248000" />
+      <workItem from="1589331935673" duration="7889000" />
+      <workItem from="1589348359165" duration="3947000" />
+      <workItem from="1589357831935" duration="3189000" />
+      <workItem from="1589361434454" duration="1209000" />
     </task>
     <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="537" y="238" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1589349822859">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="537" y="238" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1600.860@0.0.1600.860" timestamp="1589349822859" />
+    <state width="1557" height="125" key="GridCell.Tab.0.bottom" timestamp="1589362646562">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1557" height="125" key="GridCell.Tab.0.bottom/0.0.1600.860@0.0.1600.860" timestamp="1589362646562" />
+    <state width="1557" height="125" key="GridCell.Tab.0.center" timestamp="1589362646561">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1557" height="125" key="GridCell.Tab.0.center/0.0.1600.860@0.0.1600.860" timestamp="1589362646561" />
+    <state width="1557" height="125" key="GridCell.Tab.0.left" timestamp="1589362646561">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1557" height="125" key="GridCell.Tab.0.left/0.0.1600.860@0.0.1600.860" timestamp="1589362646561" />
+    <state width="1557" height="125" key="GridCell.Tab.0.right" timestamp="1589362646561">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1557" height="125" key="GridCell.Tab.0.right/0.0.1600.860@0.0.1600.860" timestamp="1589362646561" />
+    <state x="487" y="62" width="626" height="735" key="find.popup" timestamp="1589357139581">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="487" y="62" width="626" height="735" key="find.popup/0.0.1600.860@0.0.1600.860" timestamp="1589357139581" />
+    <state x="456" y="195" key="run.anything.popup" timestamp="1589359991471">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="456" y="195" key="run.anything.popup/0.0.1600.860@0.0.1600.860" timestamp="1589359991471" />
   </component>
 </project>

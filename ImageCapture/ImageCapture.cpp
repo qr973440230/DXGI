@@ -94,8 +94,8 @@ static bool GetImageCaptureData(ImageCapture *imageCapture) {
         memcpy(imageCapture->m_memRawBuffer, mappedRect.pBits, imageCapture->m_nMemSize);
         dxgiSurface->Unmap();
     }
-
     RESET_OBJECT(dxgiSurface);
+
     return SUCCEEDED(hr);
 }
 
@@ -305,11 +305,15 @@ bool DXGI_StartCapture(ImageCapture *imageCapture,
 // 停止视频数据捕获
 bool DXGI_StopCapture(ImageCapture *imageCapture) {
 
+    //发送线程停止工作信号
+    SetEvent(imageCapture->m_hStopSignal);
+    //等待线程安全退出
+    if (imageCapture->m_bActive) {
+        WaitForSingleObject(imageCapture->m_hCaptureThread, INFINITE);
+    }
+
     imageCapture->m_imageCaptureCallback = nullptr;
     imageCapture->m_userData = nullptr;
-
-    DXGI_ReleaseCapture(imageCapture);
-
     return true;
 }
 

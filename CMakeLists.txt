@@ -50,3 +50,7 @@ else ()
 endif ()
 target_link_libraries(DXGI DXGIUtils DXGIImageCapture ${OPCVLIBNAME})
 add_dependencies(DXGI copy_runtime)
+
+add_executable(MatchTemplate matchTemplate.cpp)
+target_link_libraries(MatchTemplate ${OPCVLIBNAME})
+add_dependencies(MatchTemplate copy_runtime)
