@@ -3,9 +3,9 @@
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
     <generated>
       <config projectName="DXGI" targetName="copy_runtime" />
-      <config projectName="DXGI" targetName="DXGI" />
       <config projectName="DXGI" targetName="DXGIUtils" />
       <config projectName="DXGI" targetName="DXGIImageCapture" />
+      <config projectName="DXGI" targetName="DXGI" />
     </generated>
   </component>
   <component name="CMakeSettings" AUTO_RELOAD="true">
