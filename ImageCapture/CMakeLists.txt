@@ -5,7 +5,8 @@ set(CMAKE_CXX_STANDARD 14)
 add_library(DXGIImageCapture
         SHARED
         ImageCapture.cpp
-        ImageCapture.h)
+        ImageCapture.h
+        )
 
 target_link_libraries(DXGIImageCapture
         d3d11

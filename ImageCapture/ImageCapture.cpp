@@ -1,11 +1,12 @@
 #include "ImageCapture.h"
 #include <process.h>
+#include <cstdio>
 
-#define RESET_OBJECT(A) {if (A) A->Release(); A = NULL;}
+#define RESET_OBJECT(A) {if (A) A->Release(); A = nullptr;}
 
 /*
- 将桌面挂到这个进程中
-*/
+ * 将桌面挂到这个进程中
+ */
 static bool AttachToThread() {
     HDESK oldDesktop = GetThreadDesktop(GetCurrentThreadId());
     HDESK currentDesktop = OpenInputDesktop(0, FALSE, GENERIC_ALL);
@@ -20,40 +21,68 @@ static bool AttachToThread() {
     return attached;
 }
 
-//视频数据捕获函数
-static bool GetImageCaptureData(ImageCapture *imageCapture) {
-    //将桌面挂到这个进程中
-    if (!AttachToThread()) {
-        return false;
-    }
-
-    ///截取屏幕数据
+static void mapDesktopSurface(ImageCapture *imageCapture) {
     IDXGIResource *desktopResource = nullptr;
     DXGI_OUTDUPL_FRAME_INFO frameInfo;
+    DXGI_MAPPED_RECT mappedRect;
+
+    ///截取屏幕数据
     HRESULT hr = imageCapture->m_hDeskDup->AcquireNextFrame(0, &frameInfo, &desktopResource);
     if (FAILED(hr)) {
-        //
         // 在一些win10的系统上,如果桌面没有变化的情况下，
         // 这里会发生超时现象，但是这并不是发生了错误，而是系统优化了刷新动作导致的。
-        // 所以，这里没必要返回FALSE，返回不带任何数据的TRUE即可
-        //
-        return true;
+        printf("AcquireNextFrame failure! \n");
+        return;
     }
 
-    //获取纹理2D
+    hr = imageCapture->m_hDeskDup->MapDesktopSurface(&mappedRect);
+    if (FAILED(hr)) {
+        printf("MapDesktopSurface failure! \n");
+        imageCapture->m_hDeskDup->ReleaseFrame();
+        return;
+    }
+
+    if (imageCapture->m_bActive) {
+        if (imageCapture->m_imageCaptureCallback) {
+            imageCapture->m_imageCaptureCallback(mappedRect.pBits,
+                                                 imageCapture->m_nMemSize,
+                                                 imageCapture->m_nWidth,
+                                                 imageCapture->m_nHeight,
+                                                 imageCapture->m_userData);
+        }
+    } else {
+        imageCapture->m_bActive = true;
+    }
+
+    imageCapture->m_hDeskDup->UnMapDesktopSurface();
+}
+
+static void mapSurface(ImageCapture *imageCapture) {
+    IDXGIResource *desktopResource = nullptr;
+    DXGI_OUTDUPL_FRAME_INFO frameInfo;
     ID3D11Texture2D *acquiredDesktopImage = nullptr;
+    D3D11_TEXTURE2D_DESC frameDescriptor;
+    ID3D11Texture2D *newDesktopImage = nullptr;
+    IDXGISurface *dxgiSurface = nullptr;
+    DXGI_MAPPED_RECT mappedRect;
+
+    HRESULT hr = imageCapture->m_hDeskDup->AcquireNextFrame(0, &frameInfo, &desktopResource);
+    if (FAILED(hr)) {
+        // 在一些win10的系统上,如果桌面没有变化的情况下，
+        // 这里会发生超时现象，但是这并不是发生了错误，而是系统优化了刷新动作导致的。
+        printf("AcquireNextFrame failure! \n");
+        return;
+    }
     hr = desktopResource->QueryInterface(__uuidof(ID3D11Texture2D),
                                          reinterpret_cast<void **>(&acquiredDesktopImage));
     RESET_OBJECT(desktopResource);
     if (FAILED(hr)) {
-        return false;
+        printf("QueryInterface failure! \n");
+        return;
     }
-
-    D3D11_TEXTURE2D_DESC frameDescriptor;
     acquiredDesktopImage->GetDesc(&frameDescriptor);
 
     //创建一个新的2D纹理对象,用于把 hAcquiredDesktopImage的数据copy进去
-    ID3D11Texture2D *newDesktopImage = nullptr;
     frameDescriptor.Usage = D3D11_USAGE_STAGING;
     frameDescriptor.CPUAccessFlags = D3D11_CPU_ACCESS_READ;
     frameDescriptor.BindFlags = 0;
@@ -61,13 +90,16 @@ static bool GetImageCaptureData(ImageCapture *imageCapture) {
     frameDescriptor.MipLevels = 1;
     frameDescriptor.ArraySize = 1;
     frameDescriptor.SampleDesc.Count = 1;
+
+
     hr = imageCapture->m_hDevice->CreateTexture2D(&frameDescriptor,
                                                   nullptr,
                                                   &newDesktopImage);
     if (FAILED(hr)) {
+        printf("CreateTexture2D failure! \n");
         RESET_OBJECT(acquiredDesktopImage);
         imageCapture->m_hDeskDup->ReleaseFrame();
-        return false;
+        return;
     }
 
     ///获取整个帧的数据
@@ -77,73 +109,75 @@ static bool GetImageCaptureData(ImageCapture *imageCapture) {
     imageCapture->m_hDeskDup->ReleaseFrame();
 
     // 获取这个2D纹理对象的表面
-    IDXGISurface *dxgiSurface = nullptr;
     hr = newDesktopImage->QueryInterface(__uuidof(IDXGISurface),
                                          reinterpret_cast<void **>(&dxgiSurface));
     RESET_OBJECT(newDesktopImage);
     if (FAILED(hr)) {
-        return false;
+        printf("QueryInterface failure! \n");
+        return;
     }
 
     //映射锁定表面,从而获取表面的数据地址
-    //这个时候 mappedRect.pBits 指向的内存就是原始的图像数据, 因为DXGI固定为 32位深度色
-    //mappedRect.pBits 指向的就是 BGRA 元数组
-    DXGI_MAPPED_RECT mappedRect;
+    //这个时候 mappedRect.pBits 指向的内存就是原始的图像数据, DXGI固定为 32位深度色
     hr = dxgiSurface->Map(&mappedRect, DXGI_MAP_READ);
-    if (SUCCEEDED(hr)) {
-        memcpy(imageCapture->m_memRawBuffer, mappedRect.pBits, imageCapture->m_nMemSize);
-        dxgiSurface->Unmap();
+    if (FAILED(hr)) {
+        printf("Map  failure! \n");
+        RESET_OBJECT(dxgiSurface);
+        return;
     }
-    RESET_OBJECT(dxgiSurface);
 
-    return SUCCEEDED(hr);
+    if (imageCapture->m_bActive) {
+        if (imageCapture->m_imageCaptureCallback) {
+            imageCapture->m_imageCaptureCallback(mappedRect.pBits,
+                                                 imageCapture->m_nMemSize,
+                                                 imageCapture->m_nWidth,
+                                                 imageCapture->m_nHeight,
+                                                 imageCapture->m_userData);
+        }
+    } else {
+        imageCapture->m_bActive = true;
+    }
+    dxgiSurface->Unmap();
+
+    RESET_OBJECT(dxgiSurface);
 }
 
-//视频数据循环捕获线程
+/*
+ * 视频数据循环捕获线程
+ */
 static unsigned WINAPI OnImageCaptureThread(void *param) {
     ImageCapture *imageCapture;
     imageCapture = static_cast<ImageCapture *>(param);
 
-    int fps = max(imageCapture->m_fps, 10);
+    int fps = max(imageCapture->m_nFps, 10);
     DWORD dwTimeout = 1000 / fps;
+
+    if (!AttachToThread()) {
+        printf("attach To thread failure! \n");
+        goto __exit;
+    }
 
     // 等待超时进入下一次图像数据获取
     while (WaitForSingleObject(imageCapture->m_hStopSignal, dwTimeout) == WAIT_TIMEOUT) {
-        if (GetImageCaptureData(imageCapture)) {
-            if (imageCapture->m_bActive) {
-                //获取图像成功，回调数据给应用层用户处理
-                if (imageCapture->m_imageCaptureCallback) {
-                    imageCapture->m_imageCaptureCallback((LPBYTE) imageCapture->m_memRawBuffer,
-                                                         imageCapture->m_nMemSize,
-                                                         imageCapture->m_nWidth,
-                                                         imageCapture->m_nHeight,
-                                                         imageCapture->m_userData);
-                }
-            } else {
-                // 因为第一帧是黑屏。需要忽略，具体原因未知
-                imageCapture->m_bActive = true;
-            }
+        if (imageCapture->m_hDuplDesc.DesktopImageInSystemMemory) {
+            mapDesktopSurface(imageCapture);
+        } else {
+            mapSurface(imageCapture);
         }
     }
 
-    //关闭信号
-    CloseHandle(imageCapture->m_hStopSignal);
-    imageCapture->m_hStopSignal = nullptr;
-
-    //关闭线程句柄
-    CloseHandle(imageCapture->m_hCaptureThread);
-    imageCapture->m_hCaptureThread = nullptr;
-    imageCapture->m_bActive = false;
-
+    __exit:
     _endthreadex(0);
     return 0;
 }
 
 
 //开始捕获视频数据
-static bool StartImageCapture(ImageCapture *imageCapture) {
+static bool StartImageCaptureThread(ImageCapture *imageCapture) {
+    // 创建停止信号
+    imageCapture->m_hStopSignal = CreateEvent(nullptr, TRUE, FALSE, nullptr);
 
-    //创建捕获图像的线程
+    // 创建捕获线程
     unsigned int dwThreadId;
     imageCapture->m_hCaptureThread = (HANDLE) _beginthreadex(nullptr,
                                                              0,
@@ -151,8 +185,29 @@ static bool StartImageCapture(ImageCapture *imageCapture) {
                                                              imageCapture,
                                                              THREAD_PRIORITY_NORMAL,
                                                              &dwThreadId);
+
     return imageCapture->m_hCaptureThread != nullptr;
 }
+
+static bool StopImageCaptureThread(ImageCapture *imageCapture) {
+    if (!imageCapture->m_hStopSignal || !imageCapture->m_hCaptureThread) {
+        return true;
+    }
+
+    //发送线程停止工作信号
+    SetEvent(imageCapture->m_hStopSignal);
+    //等待线程安全退出
+    WaitForSingleObject(imageCapture->m_hCaptureThread, INFINITE);
+    //关闭线程句柄
+    CloseHandle(imageCapture->m_hCaptureThread);
+    imageCapture->m_hCaptureThread = nullptr;
+    // 关闭停止信号句柄
+    CloseHandle(imageCapture->m_hStopSignal);
+    imageCapture->m_hStopSignal = nullptr;
+
+    return true;
+}
+
 
 // DXGI方式，初始化Capture
 bool DXGI_InitCapture(ImageCapture *imageCapture) {
@@ -165,12 +220,8 @@ bool DXGI_InitCapture(ImageCapture *imageCapture) {
     //参数初始化
     imageCapture->m_bActive = false;
     imageCapture->m_hCaptureThread = nullptr;
-    imageCapture->m_hStopSignal = CreateEvent(nullptr, TRUE, FALSE, nullptr);
-    imageCapture->m_memRawBuffer = nullptr;
     imageCapture->m_imageCaptureCallback = nullptr;
     imageCapture->m_userData = nullptr;
-
-    InitializeCriticalSection(&imageCapture->m_csMemLock);
 
     HRESULT hr = S_OK;
     //Direct3D驱动类型
@@ -223,7 +274,7 @@ bool DXGI_InitCapture(ImageCapture *imageCapture) {
         return false;
     }
 
-    //获取桌面对象描述符-m_dxOutDesc，主要是获取桌面分辨率大小
+    //获取桌面对象描述符-m_hOutDesc，主要是获取桌面分辨率大小
     hr = hDxgiDevice->GetParent(__uuidof(IDXGIAdapter),
                                 reinterpret_cast<void **>(&hDxgiAdapter));
     RESET_OBJECT(hDxgiDevice);
@@ -240,17 +291,14 @@ bool DXGI_InitCapture(ImageCapture *imageCapture) {
         return false;
     }
 
-    hDxgiOutput->GetDesc(&imageCapture->m_dxOutDesc);
-    imageCapture->m_nWidth = imageCapture->m_dxOutDesc.DesktopCoordinates.right
-                             - imageCapture->m_dxOutDesc.DesktopCoordinates.left;
-    imageCapture->m_nHeight = imageCapture->m_dxOutDesc.DesktopCoordinates.bottom
-                              - imageCapture->m_dxOutDesc.DesktopCoordinates.top;
+    hDxgiOutput->GetDesc(&imageCapture->m_hOutDesc);
+    imageCapture->m_nWidth = imageCapture->m_hOutDesc.DesktopCoordinates.right
+                             - imageCapture->m_hOutDesc.DesktopCoordinates.left;
+    imageCapture->m_nHeight = imageCapture->m_hOutDesc.DesktopCoordinates.bottom
+                              - imageCapture->m_hOutDesc.DesktopCoordinates.top;
 
     //计算所需存放图像的缓存大小
     imageCapture->m_nMemSize = imageCapture->m_nWidth * imageCapture->m_nHeight * 4;//获取的图像位图深度32位，所以是*4
-    imageCapture->m_memRawBuffer = (char *) malloc(imageCapture->m_nMemSize);
-    memset(imageCapture->m_memRawBuffer, 0, imageCapture->m_nMemSize);
-
 
     hr = hDxgiOutput->QueryInterface(__uuidof(IDXGIOutput1),
                                      reinterpret_cast<void **>(&hDxgiOutput1));
@@ -260,7 +308,6 @@ bool DXGI_InitCapture(ImageCapture *imageCapture) {
         return false;
     }
 
-
     hr = hDxgiOutput1->DuplicateOutput(imageCapture->m_hDevice, &imageCapture->m_hDeskDup);
     RESET_OBJECT(hDxgiOutput1);
 
@@ -269,16 +316,17 @@ bool DXGI_InitCapture(ImageCapture *imageCapture) {
         return false;
     }
 
+    imageCapture->m_hDeskDup->GetDesc(&imageCapture->m_hDuplDesc);
+
     return true;
 }
 
 bool DXGI_ReleaseCapture(ImageCapture *imageCapture) {
+    DXGI_StopCapture(imageCapture);
+
     RESET_OBJECT(imageCapture->m_hDeskDup);
     RESET_OBJECT(imageCapture->m_hContext);
     RESET_OBJECT(imageCapture->m_hDevice);
-    free(imageCapture->m_memRawBuffer);
-    imageCapture->m_memRawBuffer = nullptr;
-    DeleteCriticalSection(&imageCapture->m_csMemLock);
 
     return true;
 }
@@ -288,32 +336,24 @@ bool DXGI_StartCapture(ImageCapture *imageCapture,
                        int fps,
                        ImageCaptureCallback captureCallback,
                        void *userData) {
-    imageCapture->m_fps = fps;
-
-    //设置图像数据回调函数
+    imageCapture->m_nFps = fps;
     imageCapture->m_imageCaptureCallback = captureCallback;
     imageCapture->m_userData = userData;
 
-    bool success = StartImageCapture(imageCapture);
-    if (!success) {
-        DXGI_ReleaseCapture(imageCapture);
-    }
-
-    return success;
+    // 先停止前一个线程
+    StopImageCaptureThread(imageCapture);
+    return StartImageCaptureThread(imageCapture);
 }
 
 // 停止视频数据捕获
 bool DXGI_StopCapture(ImageCapture *imageCapture) {
+    // 停止线程
+    StopImageCaptureThread(imageCapture);
 
-    //发送线程停止工作信号
-    SetEvent(imageCapture->m_hStopSignal);
-    //等待线程安全退出
-    if (imageCapture->m_bActive) {
-        WaitForSingleObject(imageCapture->m_hCaptureThread, INFINITE);
-    }
-
+    imageCapture->m_bActive = false;
     imageCapture->m_imageCaptureCallback = nullptr;
     imageCapture->m_userData = nullptr;
+
     return true;
 }
 
